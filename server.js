@@ -28,7 +28,7 @@ app.use("/uploads", express.static("uploads")); //for images
 const PORT = process.env.PORT;
 
 app.get("/", (req, res) => {
-  res.status(200).send(<h3>Welcome to Good Food App</h3>);
+  res.send("<h3>Welcome to Good Food App</h3>");
 });
 
 app.listen(PORT, (req, res) => {
