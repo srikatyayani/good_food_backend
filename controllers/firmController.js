@@ -8,7 +8,8 @@ const storage = multer.diskStorage({
     cb(null, "uploads/"); // Destination folder
   },
   filename: function (req, file, cb) {
-    const uniqueName = Date.now() + path.extname(file.originalname);
+    const uniqueName =
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname);
     cb(null, uniqueName); // Unique filename
   },
 });
