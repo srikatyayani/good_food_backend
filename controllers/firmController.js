@@ -5,11 +5,10 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Destination folder
+    cb(null, "uploads/"); // Destination folder where the uploaded images will be stored
   },
   filename: function (req, file, cb) {
-    const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, uniqueName); // Unique filename
+    cb(null, Date.now() + path.extname(file.originalname)); // Generating a unique filename
   },
 });
 
@@ -23,8 +22,13 @@ const addFirm = async (req, res) => {
 
     const vendor = await Vendor.findById(req.vendorId);
     if (!vendor) {
-      return res.status(404).json({ message: "Vendor not found" });
+      res.status(404).json({ message: "Vendor not found" });
     }
+
+    if (vendor.firm.length > 0) {
+      return res.status(400).json({ message: "vendor can have only one firm" });
+    }
+
     const firm = new Firm({
       firmName,
       area,
@@ -34,24 +38,36 @@ const addFirm = async (req, res) => {
       image,
       vendor: vendor._id,
     });
+
     const savedFirm = await firm.save();
+
+    const firmId = savedFirm._id;
+    const vendorFirmName = savedFirm.firmName;
+
     vendor.firm.push(savedFirm);
 
     await vendor.save();
-    res.status(201).json({ message: "Firm added successfully" });
+
+    return res
+      .status(200)
+      .json({ message: "Firm Added successfully ", firmId, vendorFirmName });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Firm not added" });
+    console.error(error);
+    res.status(500).json("intenal server error");
   }
 };
 
 const deleteFirmById = async (req, res) => {
   try {
     const firmId = req.params.firmId;
-    const deletedFirm = await Firm.findByIdAndDelete(firmId);
-    res.status(200).send({ message: "firm deleted" });
+
+    const deletedProduct = await Firm.findByIdAndDelete(firmId);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "No product found" });
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
