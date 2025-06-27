@@ -53,7 +53,7 @@ const addFirm = async (req, res) => {
       .status(200)
       .json({ message: "Firm Added successfully ", firmId, vendorFirmName });
   } catch (error) {
-    res.status(500).json("internal server error", error);
+    res.status(500).json({ message: "Internal server error", error });
   }
 };
 
