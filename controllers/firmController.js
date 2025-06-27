@@ -8,8 +8,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/"); // Destination folder
   },
   filename: function (req, file, cb) {
-    const uniqueName =
-      file.fieldname + "_" + Date.now() + path.extname(file.originalname);
+    const uniqueName = Date.now() + path.extname(file.originalname);
     cb(null, uniqueName); // Unique filename
   },
 });
@@ -57,4 +56,4 @@ const deleteFirmById = async (req, res) => {
   }
 };
 
-module.exports = { addFirm, deleteFirmById };
+module.exports = { addFirm: [upload.single("image"), addFirm], deleteFirmById };
