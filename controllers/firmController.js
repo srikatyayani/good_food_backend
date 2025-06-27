@@ -16,12 +16,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const addFirm = async (req, res) => {
-  console.log(req.file);
   try {
     const { firmName, area, category, region, offer } = req.body;
 
-    const image = req.file ? req.file.filename : undefined;
-    console.log(req.file);
+    const image = req.file ? console.log("HEllo") : undefined;
+
     const vendor = await Vendor.findById(req.vendorId);
     if (!vendor) {
       return res.status(404).json({ message: "Vendor not found" });
