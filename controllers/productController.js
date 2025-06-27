@@ -5,12 +5,14 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); //destination folder where images will be stored
+    cb(null, "uploads/"); // Destination folder
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); //generates a unique name
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName); // Unique filename
   },
 });
+
 const upload = multer({ storage: storage });
 
 const addProduct = async (req, res) => {
