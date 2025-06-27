@@ -11,18 +11,7 @@ const path = require("path");
 const app = express();
 
 dotenv.config(); //using this we can access the .env file
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://your-frontend-domain.com",
-      "https://good-food-backend-project.onrender.com",
-    ], // Add more as needed
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "token"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URL)
