@@ -1,7 +1,7 @@
 const express = require("express");
 const firmController = require("../controllers/firmController");
 const verifyToken = require("../middlewares/verifyToken");
-const upload = require("../middlewares/upload");
+const upload = require("../middlewares/uploads");
 
 const router = express.Router();
 
