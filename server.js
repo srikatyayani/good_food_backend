@@ -1,9 +1,10 @@
 const express = require("express");
 const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
+const vendorRoutes = require("./routes/vendorRouter");
 const bodyParser = require("body-parser");
-const firmRoutes = require("./routes/firmRoutes");
-const productRoutes = require("./routes/productRoutes");
+const firmRoutes = require("./routes/firmRouter");
+const productRoutes = require("./routes/productRouter");
 const cors = require("cors");
 const path = require("path");
 
