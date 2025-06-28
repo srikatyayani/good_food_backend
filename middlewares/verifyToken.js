@@ -26,7 +26,9 @@ const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Invalid token" });
+    res
+      .status(500)
+      .json({ message: "Got error in token", error: error.message });
   }
 };
 
