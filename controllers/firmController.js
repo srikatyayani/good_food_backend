@@ -16,6 +16,8 @@ const upload = multer({ storage: storage });
 
 const addFirm = async (req, res) => {
   try {
+    console.log("🛠 req.body:", req.body);
+    console.log("🖼 req.file:", req.file);
     const { firmName, area, category, region, offer } = req.body;
 
     const image = req.file ? req.file.filename : undefined;
