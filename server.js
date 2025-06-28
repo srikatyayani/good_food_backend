@@ -16,8 +16,6 @@ dotEnv.config();
 app.use(
   cors({
     origin: "http://localhost:5173", // ✅ Your frontend's origin
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "token"],
     credentials: true,
   })
 );
