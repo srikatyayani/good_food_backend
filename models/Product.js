@@ -9,16 +9,18 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  category: [
-    {
-      type: String,
-      enum: ["veg", "non-veg"],
-    },
-  ],
+  category: {
+    type: [
+      {
+        type: String,
+        enum: ["veg", "non-veg"],
+      },
+    ],
+  },
   image: {
     type: String,
   },
-  bestseller: {
+  bestSeller: {
     type: Boolean,
   },
   description: {
@@ -33,4 +35,5 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model("Product", productSchema);
+
 module.exports = Product;

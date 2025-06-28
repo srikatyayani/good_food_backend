@@ -14,7 +14,6 @@ const verifyToken = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, secretKey);
-
     const vendor = await Vendor.findById(decoded.vendorId);
 
     if (!vendor) {
@@ -26,9 +25,7 @@ const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Got error in token", error: error.message });
+    return res.status(500).json({ error: "Invalid token" });
   }
 };
 

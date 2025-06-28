@@ -1,41 +1,35 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const dotEnv = require("dotenv");
 const mongoose = require("mongoose");
-const vendorRoutes = require("./routes/vendorRouter.js");
-const firmRoutes = require("./routes/firmRouter.js");
-const productRoutes = require("./routes/productRouter.js");
+const vendorRoutes = require("./routes/vendorRoutes");
 const bodyParser = require("body-parser");
+const firmRoutes = require("./routes/firmRoutes");
+const productRoutes = require("./routes/productRoutes");
 const cors = require("cors");
 const path = require("path");
 
 const app = express();
 
-dotenv.config(); //using this we can access the .env file
-app.use(
-  cors({
-    origin: "http://localhost:5173", // ✅ allow your frontend
-    credentials: true, // ✅ allow cookies if needed
-  })
-);
+const PORT = process.env.PORT || 4000;
+
+dotEnv.config();
+app.use(cors());
 
 mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((error) => console.log("MongoDB Not Connected"));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected successfully!"))
+  .catch((error) => console.log(error));
 
-//middleware
-app.use(bodyParser.json()); //input data is parsed into the json format
+app.use(bodyParser.json());
 app.use("/vendor", vendorRoutes);
 app.use("/firm", firmRoutes);
 app.use("/product", productRoutes);
-app.use("/uploads", express.static("uploads")); //for images
+app.use("/uploads", express.static("uploads"));
 
-const PORT = process.env.PORT;
-
-app.get("/", (req, res) => {
-  res.send("<h3>Welcome to Good Food App</h3>");
+app.listen(PORT, () => {
+  console.log(`server started and running at ${PORT}`);
 });
 
-app.listen(PORT, (req, res) => {
-  console.log(`Server started and running at ${PORT}`);
+app.use("/", (req, res) => {
+  res.send("<h1> Welcome to SUBY");
 });
